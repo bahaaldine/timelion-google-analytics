@@ -1,5 +1,7 @@
 # Timelion Google Analytics (TGA)
 
+![alt TGA](https://raw.githubusercontent.com/bahaaldine/timelion-google-analytics/master/timelion-google-analytics.png)
+
 TGA is a plugin that brings Google Analytics data to Timelion.
 So far it support all the metrics available as part of the Google analytics 
 API that can be found [here](https://developers.google.com/analytics/devguides/reporting/core/dimsmets)
