@@ -1,47 +1,53 @@
-# Timelion Google Analytics
+# Timelion Google Analytics (TGA)
 
-...
+TGA is a plugin that brings Google Analytics data to Timelion.
+So far it support all the metrics available as part of the Google analytics 
+API that can be found [here](https://developers.google.com/analytics/devguides/reporting/core/dimsmets)
 
-### Installation
+However, it does not support all the dimensions available in the link above, the only used dimension is `ga:date`; this is just because Timelion works with data over time dimension.
 
-... 
+## Google API project configuration
+
+### Create project
+
+Before using TGA, you need to create a Google API project on:
+https://console.developers.google.com
+
+### Configure access from the IAM console
+
+Once created, because we need a server-server connection between 
+Kibana nodejs server and Google API server, you have to create a service account key [here](https://console.developers.google.com/permissions/serviceaccounts). Note that you need to set a role that could access to Google analytics data, and also create a JSON private key
+
+### Enable Analytics reporting API
+
+Search for the Google Reporting Analytics API [here](https://console.developers.google.com/apis/library) and enable it for the newly created project.
+
+### Add new email to list of Google analytics users:
+
+In order to get data from the Google Analytic Reporting API, you need to add a user in the google analytics admin console [here](https://support.google.com/analytics/answer/1009702?hl=en#Add)
+
+## Installation
+
+TGA does not support Kibana version lower than 5.x. The TGA version you will use, should be the same than the Kibana version, you just need to adapt the following command:
 
 ```sh
 #Kibana >= 5.x
 
-./bin/kibana-plugin install  https://github.com/bahaaldine/timelion-google-analytics/releases/download/version_name/mathlion-major.minor.patch.zip
+./bin/kibana-plugin install  https://github.com/bahaaldine/timelion-google-analytics/releases/download/version_name/timelion-google-major.minor.patch.zip
 
-#Kibana <= 4.x
-./bin/kibana --install mathlion -u https://github.com/fermiumlabs/mathlion/releases/download/version_name/mathlion-major.minor.patch.zip
 ```
 
-### Examples
+## Examples
+
+TGA provides a `ganalytics` Timelion Datasource object that take the following arguments:
+
+- *viewId*: Google analytics view identifier
+- *metrics* (optional): A list of comma separated analytics metrics to display. If not set, by default the following list of metric will be displayed users, sessions, pageviews, pageviewsPerSession, sessionDuration, bounces, percentNewSessions.
 
 ```js
-.es(*).math("a=source")  //the variable "a" now contains the elasticsearch query.
-.nop().math("a")  //this row now equals the former elasticsearch query
 
-.es(*).math("source") //return the .es(*) query
-.es(*).math("source+5") // add 5 to the .es(*) query
-
-.nop().math("a=a+2 ; a=a+3 ")  //adds 5 to a
-.nop().math("a=a+2 ; a=a+3 ; a ")  //adds 5 to a and displays a+5
-
-.es(*).math("a=source")  //this query is invisible and does not generate an axis
-.es(*).math("a=source; a")  //this query does
-
-.nop.math("sqrt(3^2 + 4^2)") //returns 5
-
-//Calculate power comsumption based on measured current and stimated voltage (in Europe)
-.nop().math("electricPower(v,i)=(v*i)")
-.es(metric=avg:current).math(machineCurrent=source)
-.nop().math("elascPower(230,machineCurrent)")
-
-//plot the horizontal statistical mean and variance
-.es(*).math("me=mean(source); va=var(source)")
-.value(1).math(me*source) 
-.value(1).math("(me+sqrt(va))*source") 
-.value(1).math("(me-sqrt(va))*source")
+.ganalytics(viewId="88407851") // display the default list of metrics
+.ganalytics(viewId="88407851", metrics="ga:users,ga:bounces") // display users traffic and bounces stats
 
 ```
 
@@ -50,15 +56,9 @@
 This plugin is supported by:
 
 * Kibana 5 beta 1
-* Kibana 4.x (check out branch [backport-4](https://github.com/fermiumlabs/mathlion/tree/backport-4))
-
-We regularly test only for Kibana 5. If you find bugs on Kibana 4 you can open a issue, but we would prefer a pull request.
 
 ## Features:
 
-* Full-featured math in Timelion
-* Variables and custom functions
-* Physical constants
-* Units of measurement
-
-For upcoming features and TODOs check [here](https://github.com/fermiumlabs/mathlion/projects).
+* Full-featured google analytics reporting api in Timelion
+* google analytics metrics 
+* multiple anlaytics at once 
