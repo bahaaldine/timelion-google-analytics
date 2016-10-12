@@ -39,6 +39,28 @@ TGA does not support Kibana version lower than 5.x. The TGA version you will use
 
 ```
 
+Add the your service account JSON private key to the `timelion.json` file located in `kibana_home/src/core_plugins/timelion` as follow:
+
+```json
+...
+"google": {
+    "service_account": {
+      "type": "service_account",
+      "project_id": " ... PROJECT ID ... ",
+      "private_key_id": " ... PRIVATE ID ... ",
+      "private_key": " ... PRIVATE KEY ... ",
+      "client_email": " ... CLIENT EMAIL ... ",
+      "client_id": " ... CLIENT ID ... ",
+      "auth_uri": " ... AUTH URI ... ",
+      "token_uri": " ... TOKEN URI ...  ",
+      "auth_provider_x509_cert_url": " ... AUTH PROVIDER X509 CERT URL ... ",
+      "client_x509_cert_url": " ... CLIENT X509 CERT URL ...  "
+    }
+  }
+...
+```
+Note that I've created a Google object that conains a service_account object which content is the actually JSON private key.
+
 ## Examples
 
 TGA provides a `ganalytics` Timelion Datasource object that take the following arguments:
