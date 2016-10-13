@@ -1,4 +1,8 @@
+[![Build Status](https://travis-ci.org/bahaaldine/timelion-google-analytics.svg?branch=master)](https://travis-ci.org/bahaaldine/timelion-google-analytics)
+
 # Timelion Google Analytics (TGA)
+
+![alt TGA](https://raw.githubusercontent.com/bahaaldine/timelion-google-analytics/master/timelion-google-analytics.png)
 
 TGA is a plugin that brings Google Analytics data to Timelion.
 So far it support all the metrics available as part of the Google analytics 
@@ -36,6 +40,28 @@ TGA does not support Kibana version lower than 5.x. The TGA version you will use
 ./bin/kibana-plugin install  https://github.com/bahaaldine/timelion-google-analytics/releases/download/version_name/timelion-google-major.minor.patch.zip
 
 ```
+
+Add the your service account JSON private key to the `timelion.json` file located in `kibana_home/src/core_plugins/timelion` as follow:
+
+```json
+...
+"google": {
+    "service_account": {
+      "type": "service_account",
+      "project_id": " ... PROJECT ID ... ",
+      "private_key_id": " ... PRIVATE ID ... ",
+      "private_key": " ... PRIVATE KEY ... ",
+      "client_email": " ... CLIENT EMAIL ... ",
+      "client_id": " ... CLIENT ID ... ",
+      "auth_uri": " ... AUTH URI ... ",
+      "token_uri": " ... TOKEN URI ...  ",
+      "auth_provider_x509_cert_url": " ... AUTH PROVIDER X509 CERT URL ... ",
+      "client_x509_cert_url": " ... CLIENT X509 CERT URL ...  "
+    }
+  }
+...
+```
+Note that I've created a Google object that conains a service_account object which content is the actual JSON private key.
 
 ## Examples
 
