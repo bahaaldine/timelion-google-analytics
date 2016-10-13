@@ -20,7 +20,7 @@ module.exports = new Datasource('ganalytics', {
       help: 'A list of comma separated analytics metrics to display: users, sessions, pageviews, pageviewsPerSession, sessionDuration, bounces, percentNewSessions. More here: https://developers.google.com/analytics/devguides/reporting/core/dimsmets'
     }
   ],
-  help: 'Advanced math parsing.',
+  help: 'Google Analytics Reporting API data source',
   fn: function ganalytics(args, tlConfig) {
     var config = _.defaults(args.byName, {
       metrics: "users, sessions, pageviews, pageviewsPerSession, sessionDuration, bounces, percentNewSessions"
