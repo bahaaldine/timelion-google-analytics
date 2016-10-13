@@ -1,0 +1,19 @@
+site_name: Timelion Google Analytics plugin
+site_url: https://github.com/bahaaldine/timelion-google-analytics
+site_description: Timelion Google Analytics plugin
+site_author: bahaaldine
+
+theme: readthedocs
+
+repo_url: https://github.com/bahaaldine/timelion-google-analytics
+
+pages:
+- Home: index.md
+- Installation: installation.md
+- Functions list:
+  - functions/ganalytics.md
+  
+copyright: Elastic
+  
+
+  
