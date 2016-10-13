@@ -59,7 +59,7 @@ Add the your service account JSON private key to the `timelion.json` file locate
   }
 ...
 ```
-Note that I've created a Google object that conains a service_account object which content is the actually JSON private key.
+Note that I've created a Google object that conains a service_account object which content is the actual JSON private key.
 
 ## Examples
 
