@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bahaaldine/timelion-google-analytics.svg?branch=master)](https://travis-ci.org/bahaaldine/timelion-google-analytics)
+
 # Timelion Google Analytics (TGA)
 
 ![alt TGA](https://raw.githubusercontent.com/bahaaldine/timelion-google-analytics/master/timelion-google-analytics.png)
