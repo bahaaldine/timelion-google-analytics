@@ -1,0 +1,43 @@
+language: node_js
+node_js:
+- 4
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+sudo: required
+dist: trusty
+  
+env:
+- CXX="g++-4.8" KIBANA_VERSION="5.0.0-beta1" ELASTICSEARCH_VERSION="5.0.0-beta1"
+
+
+before_script:
+- npm install -g gulp
+- wget -O kibana.tar.gz https://github.com/elastic/kibana/archive/v${KIBANA_VERSION}.tar.gz
+- mkdir -p kibana && tar -zxf kibana.tar.gz -C kibana --strip-components=1
+- sh -c 'cd kibana && npm install'
+- curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.deb && sudo dpkg -i --force-confnew elasticsearch-${ELASTICSEARCH_VERSION}.deb && sudo service elasticsearch restart
+- curl -O https://raw.githubusercontent.com/rockymadden/transfer-cli/master/src/transfer && chmod +x transfer
+- pip install mkdocs
+
+script:
+- mkdocs build
+- gulp build
+- gulp package
+- bash test.sh
+
+deploy:
+  provider: releases
+  file_glob: true
+  api_key:
+    secure: aLzj7l6vkDJdyYjKOoUNrYFHCkEaahkvNw3pk3R4Uv380F9e8/MswxI31s6VaKaELfBFT1VjND/EIgm9D/V5Nnv5H8NA1Q33VHn2iOpz3OmFTcA4TTM9zDRuXHM6akPFDEyDbboUO0+eKfK3jd4DN3IRpw1j8yYshAlXbwf19JediP2gx9zGNsznK28/h55uTDpuAiRD2cwrgDAlRXm5N2A4HOSQmyJIuCG1srdyjHayWm3R5QNVTpnnNVIcRtifHk5KAeZrmbHlEy+VGheK5iccb36eMQu7dYVKoJOGFT7mDuwRdnvXbmdbVHouXiwkry0HjNI2lHNVtWX3Ze0VhZX0i1XXroQ4ORKsncmEeuVWT/P6c8hYNT6mTCKbOs/g06jA0XPmYuDBA548Ia82pcxL3zxXLuRH4c6+Es0wuPt8RjXUWPX/riiGin1ghEUSSDdjR5gnZBJ70e0FpBsVkb0SX6gVryrUFQt0TNYM5QJ9ugV/TcHy3cC5CU3MQx8vqqZtZnOc9lqgUcNHs1orYpkFLWCgUqyCgu/SCzsRks7q+sHFEFTsgree4MzlePT8V763eBT0+ZFsWH1b6Wf7DEy2XBHOtbBFWl50V3214IlrMensAgFjEBZ4c+cR7UWHy9F0AG4W2kxPwURK0IkT4HQ27oPxxj96XIWyXIdFV74=
+  file: target/timelion-google-analytics-*.zip
+  skip_cleanup: true
+  on:
+    repo: bahaaldine/timelion-google-analytics
+    tags: true
+    node: 4
