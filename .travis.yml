@@ -1,49 +1,33 @@
 language: node_js
 node_js:
 - 4
-
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
 sudo: required
 dist: trusty
-  
 env:
 - CXX="g++-4.8" KIBANA_VERSION="5.0.0-beta1" ELASTICSEARCH_VERSION="5.0.0-beta1"
-
-
 before_script:
 - npm install -g gulp
-#- wget -O kibana.tar.gz https://github.com/elastic/kibana/archive/v${KIBANA_VERSION}.tar.gz
--# mkdir -p kibana && tar -zxf kibana.tar.gz -C kibana --strip-components=1
-#- sh -c 'cd kibana && npm install'
-#- curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}.deb && sudo dpkg -i --force-confnew elasticsearch-${ELASTICSEARCH_VERSION}.deb && sudo service elasticsearch restart
-#- curl -O https://raw.githubusercontent.com/rockymadden/transfer-cli/master/src/transfer && chmod +x transfer
 - pip install mkdocs
-
 script:
 - mkdocs build
 - gulp build
 - gulp package
-#- bash test.sh
-
 deploy:
   provider: releases
-  file_glob: true
   api_key:
-    secure: bxYENj9OHG7wTO6wMNHf9PgEAfxgohk2wcpz4rzjb4AwKDrRq9/U5bsCG56SBN0iPn8/gHDIb38Cl2CEjD702uyBtXTu1hqktq5APmcsaxjas21G9JUr3Mweo1LrI5SWZGVgYDJsBKn4OaLBGgcCgFdQUmZGSvtW1W2T05LSBOS315Zu1/ZYecWRNgEPxiIid+W2cky0bMPufgmQLFEgcJSMMXtjY3aJKwNVHR1d6plK/m2Nj0rqA/PmBb5IMWxSp0CFZcVHjU7YYx8zRG0B3X7lizFJt7lAqwt/RIClILUxwFgruGYkKpFVj8Zbot+WMSXx67vwXORZfHMYx/+tEtWumwne3RWxWaIj4HSNorcn1gQOl6E2MmMMhKGjcvWnSxyddSBAyWDVMNAzkIeAitTCNq4SDYf/2iVdAKKX230zISkO6rMTbue7VO+t3sCl0ZF7q33jbJ6JTI6CHFtEcapvvEc+pURSG1FBUPdgXwxR8vBg12dBTclAC1u42W9ai66YMh+hSbrwHSthTW2f8FYrpu1hEI9M1LVvVrbZa3aSYA48R4+nAoRBSl5pS38p3OaBkNcz/NMlSvKxW8YdLDUPq7uX2GPoknqzgnR6xKaDKpTedc2zSKfPhCJKqTC1Wl4YqEZLLMmokOFGFTlLFvYJAavMmdIlelPAL9uXd/A=
+    secure: HWPK1BBoCb0gsMwVNmuA7+LB7Yhm2bBSt7wZW402bsOC89B1Fq6ODTGLBxH/jTRDl9Qol7w4/jfKFiJbS7PDVC5bSBauKm0YKXniSQM4Fae8EC6FK/LG/0bztojz+uzNP4zZ80mUXS127GFGbjMTRkkvd5Ise7mCvTbpECJOBDSEX6rIFuBMQyy3WFzXos/3uuCtQEtTw5SnY8X9r8NKq8QmAZ4SrmHqDnCXLW/j372xjVcPYxRNRLxf7z6lznRR/4vyENXCOypdtyUdCcXjFvm8MbRR0YmUb8Y7PimyszytMeX+yR4Hf0IV64Vmj6PU5VQFwmYKWVCjL2FLZITxcq5JzDuyodthK4vBKceF0qGFIdt/GskNhpmduPke2nsqEE7cq1/+k4l05HmLdu8n2yvpYdssZ7YZP90W5sOo4uaDGoDiFvcsOc8pA7y3PlcpHfMQV+yPQOHE1FyrWhjDPQax10clCjF8bzLeTEjAMDOUaJpcLOjqtiZpkT2QbFDPDpYsVf0a0f7q48euAqsa0FpHUA4N1pglPd9RsHT0j30UWmMoKoZi/nnRyIvTU5TfPe1thhZ7NZnMI7jCYQeVYKRIUxba3zey0WvDGBWl17sHyUCt6LWwi99MKvvL/7qjeLi9DxqRCVnLzudIUvK0dyP9A8PSjbKlhiM1Y0mmxEc=
   file: target/timelion-google-analytics-*.zip
-  skip_cleanup: true
   on:
     repo: bahaaldine/timelion-google-analytics
-    tags: true
-    node: 4
 after_success:
-  - |
+- |2-
 
-       $(npm bin)/set-up-ssh --key "$encrypted_XXXXXXXXXXXX_key" \
-                             --iv "$encrypted_XXXXXXXXXXXX_iv" \
-                             --path-encrypted-key ".travis/github_deploy_key.enc"
+  $(npm bin)/set-up-ssh --key "$encrypted_XXXXXXXXXXXX_key" \
+                        --iv "$encrypted_XXXXXXXXXXXX_iv" \
+                        --path-encrypted-key ".travis/github_deploy_key.enc"
