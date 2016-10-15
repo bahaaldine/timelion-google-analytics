@@ -1,17 +1,8 @@
-var metadata = require('./metadata.json');
 var _ = require('lodash');
 var moment = require('moment');
 var google = require('googleapis');
 var analyticsreporting = google.analyticsreporting('v4')
 var Promise = require('bluebird');
-
-module.exports.getMetadataListByType = function(type) {
-	return _.map(metadata.items, function(item) {
-		if ( item.attributes.type === type ) {
-			return item.id;
-		}
-	});
-};
 
 module.exports.authorize = function(request, tlConfig) {
   return new Promise(function (resolve, reject) {
@@ -60,6 +51,8 @@ module.exports.getReport = function(request) {
         }
 
         serieList.data = _.map(data, function(item) {
+          console.log(item)
+          console.log(item.metrics[0].values)
           return [ moment(item.dimensions, "YYYYMMDD").format("x"), item.metrics[0].values[i] ]
         });
 
