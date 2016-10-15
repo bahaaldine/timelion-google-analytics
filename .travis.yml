@@ -13,9 +13,9 @@ env:
 - CXX="g++-4.8" KIBANA_VERSION="5.0.0-beta1" ELASTICSEARCH_VERSION="5.0.0-beta1"
 before_script:
 - npm install -g gulp
-- pip install mkdocs
+#- pip install mkdocs
 script:
-- mkdocs build
+#- mkdocs build
 - gulp build
 - gulp package
 deploy:
