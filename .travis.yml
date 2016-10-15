@@ -25,6 +25,8 @@ deploy:
   file: target/timelion-google-analytics-*.zip
   on:
     repo: bahaaldine/timelion-google-analytics
+    tags: true
+    node: 4
 after_success:
 - |2-
 
