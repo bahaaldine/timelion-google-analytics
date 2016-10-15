@@ -28,7 +28,7 @@ script:
 - mkdocs build
 - gulp build
 - gulp package
-- bash test.sh
+#- bash test.sh
 
 deploy:
   provider: releases
