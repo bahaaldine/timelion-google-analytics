@@ -34,10 +34,16 @@ deploy:
   provider: releases
   file_glob: true
   api_key:
-    secure: 2e958021848eb80b4f2291e38c85d78734f67338
+    secure: bxYENj9OHG7wTO6wMNHf9PgEAfxgohk2wcpz4rzjb4AwKDrRq9/U5bsCG56SBN0iPn8/gHDIb38Cl2CEjD702uyBtXTu1hqktq5APmcsaxjas21G9JUr3Mweo1LrI5SWZGVgYDJsBKn4OaLBGgcCgFdQUmZGSvtW1W2T05LSBOS315Zu1/ZYecWRNgEPxiIid+W2cky0bMPufgmQLFEgcJSMMXtjY3aJKwNVHR1d6plK/m2Nj0rqA/PmBb5IMWxSp0CFZcVHjU7YYx8zRG0B3X7lizFJt7lAqwt/RIClILUxwFgruGYkKpFVj8Zbot+WMSXx67vwXORZfHMYx/+tEtWumwne3RWxWaIj4HSNorcn1gQOl6E2MmMMhKGjcvWnSxyddSBAyWDVMNAzkIeAitTCNq4SDYf/2iVdAKKX230zISkO6rMTbue7VO+t3sCl0ZF7q33jbJ6JTI6CHFtEcapvvEc+pURSG1FBUPdgXwxR8vBg12dBTclAC1u42W9ai66YMh+hSbrwHSthTW2f8FYrpu1hEI9M1LVvVrbZa3aSYA48R4+nAoRBSl5pS38p3OaBkNcz/NMlSvKxW8YdLDUPq7uX2GPoknqzgnR6xKaDKpTedc2zSKfPhCJKqTC1Wl4YqEZLLMmokOFGFTlLFvYJAavMmdIlelPAL9uXd/A=
   file: target/timelion-google-analytics-*.zip
   skip_cleanup: true
   on:
     repo: bahaaldine/timelion-google-analytics
     tags: true
     node: 4
+after_success:
+  - |
+
+       $(npm bin)/set-up-ssh --key "$encrypted_XXXXXXXXXXXX_key" \
+                             --iv "$encrypted_XXXXXXXXXXXX_iv" \
+                             --path-encrypted-key ".travis/github_deploy_key.enc"
