@@ -37,7 +37,16 @@ TGA does not support Kibana version lower than 5.x. The TGA version you will use
 ```sh
 #Kibana >= 5.x
 
-./bin/kibana-plugin install  https://github.com/bahaaldine/timelion-google-analytics/releases/download/version_name/timelion-google-major.minor.patch.zip
+./bin/kibana-plugin install  https://github.com/bahaaldine/timelion-google-analytics/releases/download/version_name/timelion-google-analytics-major.minor.patch.zip
+
+```
+
+ex:
+
+```sh
+#Kibana >= 5.x
+
+./bin/kibana-plugin install  https://github.com/bahaaldine/timelion-google-analytics/releases/download/v5.0.0-beta1/timelion-google-analytics-5.0.0-beta1.zip
 
 ```
 
