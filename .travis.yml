@@ -15,7 +15,6 @@ before_script:
 - npm install -g gulp
 #- pip install mkdocs
 script:
-#- mkdocs build
 - gulp build
 - gulp package
 deploy:
