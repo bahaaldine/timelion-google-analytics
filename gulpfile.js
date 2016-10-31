@@ -19,7 +19,7 @@ var zip = require('gulp-zip');
 var pkg = require('./package.json');
 
 // relative location of Kibana install
-var pathToKibana = '../kibana5.0.0-beta1';
+var pathToKibana = '../kibana5.0.0';
 
 var buildDir = path.resolve(__dirname, 'build/kibana');
 var packageRoot = path.resolve(__dirname, 'build');

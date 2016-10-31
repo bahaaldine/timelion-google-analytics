@@ -35,35 +35,33 @@ module.exports.authorize = function(request, tlConfig) {
 }
 
 module.exports.getReport = function(request) {
+  var lists = [];
   return new Promise(function(resolve, reject) {
     analyticsreporting.reports.batchGet(request, function(err, resp) {
-    	var metricsList = _.map(resp.reports[0].columnHeader.metricHeader.metricHeaderEntries, function(metric){
-    		return metric.name;
-    	});
-      var data = resp.reports[0].data.rows;
-      var lists = [];
-      for ( var i=0, l=metricsList.length; i<l; i++ ) {
+      if ( typeof resp != "undefined" && resp != null ) {
+      	var metricsList = _.map(resp.reports[0].columnHeader.metricHeader.metricHeaderEntries, function(metric){
+      		return metric.name;
+      	});
+        const data = resp.reports[0].data.rows;
+        for ( var i=0, l=metricsList.length; i<l; i++ ) {
 
-        var serieList = {
-          data: [],
-          type: 'series',
-          label: metricsList[i]
+          var serieList = {
+            data: [],
+            type: 'series',
+            label: metricsList[i]
+          }
+
+          serieList.data = _.map(data, function(item) {
+            return [ moment(item.dimensions, "YYYYMMDD").format("x"), item.metrics[0].values[i] ]
+          });
+
+          lists.push(serieList);
         }
-
-        serieList.data = _.map(data, function(item) {
-          console.log(item)
-          console.log(item.metrics[0].values)
-          return [ moment(item.dimensions, "YYYYMMDD").format("x"), item.metrics[0].values[i] ]
-        });
-
-        lists.push(serieList);
       }
-
       resolve({
         type: 'seriesList',
         list: lists
       });
-
     });
   });
 }

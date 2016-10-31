@@ -23,12 +23,12 @@ module.exports = new Datasource('ganalytics', {
   help: 'Google Analytics Reporting API data source',
   fn: function ganalytics(args, tlConfig) {
     var config = _.defaults(args.byName, {
-      metrics: "users, sessions, pageviews, pageviewsPerSession, sessionDuration, bounces, percentNewSessions"
+      metrics: "ga:users, ga:sessions, ga:pageviews, ga:pageviewsPerSession, ga:sessionDuration, ga:bounces, ga:percentNewSessions"
     });
 
     var viewId = config.viewId;
     var metricsList = _.map(config.metrics.split(','), function(metric){
-      return 'ga:' + metric.replace(/ /g,'');
+      return metric.replace(/ /g,'');
     });
     var dimensionsList = ["ga:date"];
     var startDate = moment(tlConfig.time.from).format("YYYY-MM-DD");
