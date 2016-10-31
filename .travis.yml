@@ -37,7 +37,7 @@ deploy:
   on:
     repo: bahaaldine/timelion-google-analytics
     tags: true
-    node: 4
+    node: 6.9.0
 after_success:
 - |2-
 
